@@ -32,8 +32,9 @@ jobs:
 
       - name: Convert to Android & Build APK
         run: |
+          rm -f build.gradle.kts settings.gradle.kts gradle.properties capacitor.config.ts
           npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
-          npx cap init "Jarvis Assistant" "com.jarvis.voiceassistant" --web-dir dist
+          echo '{"appId": "com.jarvis.voiceassistant", "appName": "Jarvis Assistant", "webDir": "dist"}' > capacitor.config.json
           npx cap add android
           npx cap sync android
           cd android
