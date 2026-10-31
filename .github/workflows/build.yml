@@ -1,4 +1,4 @@
-name: React Vite App Build
+name: Build Android APK
 
 on:
   push:
@@ -8,17 +8,40 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-        
+
+      - name: Set up Java 17 for Android
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Build App
+      - name: Build Web App
         run: npm run build
+
+      - name: Convert to Android & Build APK
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
+          npx cap init "Jarvis Assistant" "com.jarvis.voiceassistant" --web-dir dist
+          npx cap add android
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jarvis-App-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
