@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Set up Java 17 for Android
+      - name: Set up Java 21 for Android
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
@@ -39,7 +39,7 @@ jobs:
           npx cap sync android
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
