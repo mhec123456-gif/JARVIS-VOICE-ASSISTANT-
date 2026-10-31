@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Set up Java 21 for Android
+      - name: Set up Java 17 for Android
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '17'
 
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
@@ -32,8 +32,8 @@ jobs:
 
       - name: Convert to Android & Build APK
         run: |
-          rm -f build.gradle.kts settings.gradle.kts gradle.properties capacitor.config.ts
-          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
+          rm -rf android build.gradle.kts settings.gradle.kts gradle.properties capacitor.config.ts capacitor.config.json
+          npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 --legacy-peer-deps
           echo '{"appId": "com.jarvis.voiceassistant", "appName": "Jarvis Assistant", "webDir": "dist"}' > capacitor.config.json
           npx cap add android
           npx cap sync android
