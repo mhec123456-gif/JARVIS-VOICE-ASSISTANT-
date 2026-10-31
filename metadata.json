@@ -1,0 +1,6 @@
+{
+  "name": "JARVIS Voice Assistant - Vivo X200 FE & Android Kotlin",
+  "description": "Native Android Jetpack Compose voice assistant with English & Malayalam speech support, Gemini & OpenAI routing, speaker verification, wake-word detection, and full APK project exporter.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
